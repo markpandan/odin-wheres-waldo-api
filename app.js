@@ -12,9 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 const gamesRoute = require("./routes/GamesRoute");
 app.use("/games", gamesRoute);
 
-const highscoresRoute = require("./routes/HighScoresRoute");
-app.use("/highscores", highscoresRoute);
-
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}!`);
