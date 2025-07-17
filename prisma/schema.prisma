@@ -14,8 +14,8 @@ datasource db {
 }
 
 model GameImages {
-  id       String @id @default(uuid())
-  name     String
+  id       Int    @id @default(autoincrement())
+  name     String @unique
   imageUrl String
   width    Int
   heigth   Int
@@ -31,14 +31,14 @@ model Entities {
   box      Int[]
 
   gameImage   GameImages @relation(fields: [gameImageId], references: [id])
-  gameImageId String
+  gameImageId Int
 }
 
 model Highscores {
   id   String @id @default(uuid())
-  name String
+  name String @unique
   time String
 
   gameImage   GameImages @relation(fields: [gameImageId], references: [id])
-  gameImageId String
+  gameImageId Int
 }

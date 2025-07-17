@@ -5,7 +5,11 @@ const controller = require("../controllers/GamesController");
 
 router.get("/images/:imageId", controller.getImage);
 
+router.post("/images", controller.postImage);
+
 router.get("/images/:imageId/entities", controller.getImageEntities);
+
+router.post("/images/:imageId/entities", controller.postImageEntities);
 
 router.get("/highscores", controller.getHighscores);
 
