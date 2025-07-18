@@ -3,6 +3,8 @@ const router = express.Router();
 
 const controller = require("../controllers/GamesController");
 
+router.get("/images", controller.getAllImages);
+
 router.get("/images/:imageId", controller.getImage);
 
 router.post("/images", controller.postImage);

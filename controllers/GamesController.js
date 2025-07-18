@@ -1,5 +1,11 @@
 const db = require("../prisma/queries");
 
+exports.getAllImages = async (req, res) => {
+  const images = await db.getGameImages();
+
+  res.json({ output: images });
+};
+
 exports.getImage = async (req, res) => {
   const { imageId } = req.params;
 
@@ -17,23 +23,29 @@ exports.postImage = async (req, res) => {
 exports.getImageEntities = async (req, res) => {
   const { imageId } = req.params;
 
-  const entities = await db.getEntitiesByGameImageId(imageId);
+  const entities = await db.getGameImageWithEntities(imageId);
   res.json({ output: entities });
 };
 
-exports.postImageEntities = async (req, res) => {};
+exports.postImageEntities = async (req, res) => {
+  const { name, imageUrl, box, gameImageId } = req.body;
+
+  await db.createNewEntity(name, imageUrl, box, gameImageId);
+
+  res.json({ message: "Entity Submitted" });
+};
 
 exports.getHighscores = async (req, res) => {
-  const { imageId } = req.query;
+  const { gameId } = req.query;
 
-  const highscores = await db.getHighscoresByGameImageId(imageId);
+  const highscores = await db.getHighscoresByGameImageId(gameId);
   res.json({ output: highscores });
 };
 
 exports.postHighscore = async (req, res) => {
-  const { imageId } = req.query;
+  const { gameId } = req.query;
   const { name, time } = req.body;
 
-  await db.createNewHighScore(name, time, imageId);
+  await db.createNewHighScore(name, time, gameId);
   res.json({ message: "Highscore Submitted" });
 };

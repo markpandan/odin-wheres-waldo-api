@@ -18,7 +18,7 @@ model GameImages {
   name     String @unique
   imageUrl String
   width    Int
-  heigth   Int
+  height   Int
 
   Entities   Entities[]
   Highscores Highscores[]
@@ -27,7 +27,8 @@ model GameImages {
 model Entities {
   id       String @id @default(uuid())
   name     String
-  imageUrl String
+  imageUrl String @unique
+  // x1, y1, x2, y2
   box      Int[]
 
   gameImage   GameImages @relation(fields: [gameImageId], references: [id])

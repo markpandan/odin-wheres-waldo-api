@@ -8,12 +8,13 @@ exports.createNewGameImage = async (name, imageUrl, width, height) => {
       name,
       imageUrl,
       width,
-      heigth,
+      height,
     },
   });
 };
 
 exports.createNewEntity = async (name, imageUrl, box, gameImageId) => {
+  gameImageId = parseInt(gameImageId);
   await prisma.entities.create({
     data: {
       name,
@@ -25,6 +26,7 @@ exports.createNewEntity = async (name, imageUrl, box, gameImageId) => {
 };
 
 exports.createNewHighScore = async (name, time, gameImageId) => {
+  gameImageId = parseInt(gameImageId);
   await prisma.highscores.create({
     data: {
       name,
@@ -34,15 +36,37 @@ exports.createNewHighScore = async (name, time, gameImageId) => {
   });
 };
 
+exports.getGameImages = async () => {
+  const images = await prisma.gameImages.findMany({});
+
+  return images;
+};
+
 exports.getGameImageById = async (id) => {
-  await prisma.gameImages.findUnique({
+  id = parseInt(id);
+  const image = await prisma.gameImages.findUnique({
     where: {
       id,
     },
   });
+
+  return image;
+};
+
+exports.getGameImageWithEntities = async (id) => {
+  id = parseInt(id);
+  const image = await prisma.gameImages.findUnique({
+    where: { id },
+    include: {
+      Entities: true,
+    },
+  });
+
+  return image;
 };
 
 exports.getEntitiesByGameImageId = async (gameImageId) => {
+  gameImageId = parseInt(gameImageId);
   await prisma.entities.findMany({
     where: {
       gameImageId,
@@ -51,9 +75,12 @@ exports.getEntitiesByGameImageId = async (gameImageId) => {
 };
 
 exports.getHighscoresByGameImageId = async (gameImageId) => {
-  await prisma.highscores.findMany({
+  gameImageId = parseInt(gameImageId);
+  const highscores = await prisma.highscores.findMany({
     where: {
       gameImageId,
     },
   });
+
+  return highscores;
 };
