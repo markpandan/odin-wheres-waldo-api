@@ -14,11 +14,12 @@ datasource db {
 }
 
 model GameImages {
-  id       Int    @id @default(autoincrement())
-  name     String @unique
-  imageUrl String
-  width    Int
-  height   Int
+  id           Int    @id @default(autoincrement())
+  name         String @unique
+  imageUrl     String
+  thumbnailUrl String
+  width        Int
+  height       Int
 
   Entities   Entities[]
   Highscores Highscores[]
@@ -36,8 +37,8 @@ model Entities {
 }
 
 model Highscores {
-  id   String @id @default(uuid())
-  name String @unique
+  id   String  @id @default(uuid())
+  name String?
   time String
 
   gameImage   GameImages @relation(fields: [gameImageId], references: [id])

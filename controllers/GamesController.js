@@ -1,5 +1,11 @@
 const db = require("../prisma/queries");
 
+exports.getListOfGames = async (req, res) => {
+  const gameList = await db.getGameList();
+
+  res.json({ output: gameList });
+};
+
 exports.getAllImages = async (req, res) => {
   const images = await db.getGameImages();
 
@@ -46,6 +52,20 @@ exports.postHighscore = async (req, res) => {
   const { gameId } = req.query;
   const { name, time } = req.body;
 
-  await db.createNewHighScore(name, time, gameId);
-  res.json({ message: "Highscore Submitted" });
+  const createdHighScore = await db.createNewHighScore(name, time, gameId);
+  res.json({ output: createdHighScore });
+};
+
+exports.putHighScore = async (req, res) => {
+  const { highscoreId, name } = req.body;
+
+  await db.updateHighScore(highscoreId, name);
+  res.json({ message: "Highscore Updated" });
+};
+
+exports.deleteHighScore = async (req, res) => {
+  const { highscoreId } = req.body;
+
+  await db.deleteHighScore(highscoreId);
+  res.json({ message: "Highscore Deleted" });
 };

@@ -27,13 +27,45 @@ exports.createNewEntity = async (name, imageUrl, box, gameImageId) => {
 
 exports.createNewHighScore = async (name, time, gameImageId) => {
   gameImageId = parseInt(gameImageId);
-  await prisma.highscores.create({
+  const newHighScore = await prisma.highscores.create({
     data: {
       name,
       time,
       gameImageId,
     },
   });
+
+  return newHighScore;
+};
+
+exports.updateHighScore = async (id, name) => {
+  await prisma.highscores.update({
+    where: {
+      id,
+    },
+    data: {
+      name,
+    },
+  });
+};
+
+exports.deleteHighScore = async (id) => {
+  await prisma.highscores.delete({
+    where: {
+      id,
+    },
+  });
+};
+
+exports.getGameList = async () => {
+  const list = await prisma.gameImages.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+
+  return list;
 };
 
 exports.getGameImages = async () => {
