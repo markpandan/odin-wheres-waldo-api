@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "server": "node --watch app.js",
-    "populate": "node prisma/populate.js"
+    "populate": "node prisma/populate.js",
+    "build": "npx prisma migrate dev --name init && node prisma/populate.js"
   },
   "repository": {
     "type": "git",
