@@ -4,8 +4,9 @@
   "description": "This repository was made as an API for Where's Waldo Project: https://github.com/markpandan/odin-wheres-waldo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node --watch app.js"
+    "test": "jest",
+    "server": "node --watch app.js",
+    "populate": "node prisma/populate.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,8 @@
     "express": "^5.1.0"
   },
   "devDependencies": {
-    "prisma": "^6.12.0"
+    "jest": "^30.0.4",
+    "prisma": "^6.12.0",
+    "supertest": "^7.1.3"
   }
 }
