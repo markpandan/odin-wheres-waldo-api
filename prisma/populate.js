@@ -96,4 +96,12 @@ async function populate() {
   });
 }
 
-populate();
+try {
+  populate();
+} catch (error) {
+  if (error.name == "PrismaClientKnownRequestError" && error.code == "P2002") {
+    console.log("Entries already been created");
+  } else {
+    console.error(error);
+  }
+}
